@@ -3,7 +3,9 @@
 lines = collect([collect(line) for line in readlines("day7/input.txt")])
 
 #construct the tachyon beam
+num_splits = 0
 for (i, line) in enumerate(lines)
+    global num_splits
     out_line = collect("."^length(line))
     for (j, char) in enumerate(line)
         if char == 'S'
@@ -18,6 +20,7 @@ for (i, line) in enumerate(lines)
                         out_line[j+1] = '|'
                     end
                     out_line[j] = '^'
+                    num_splits += 1
                 else
                     out_line[j] = '|'
                 end
@@ -25,17 +28,6 @@ for (i, line) in enumerate(lines)
         end
     end
     lines[i] = out_line
-end
-
-#count number of times '|' appears directly above a '^'
-num_splits = 0
-for i in eachindex(lines[2:end])
-    global num_splits
-    for j in 1:length(lines[i])
-        if lines[i][j] == '^' && lines[i-1][j] == '|'
-            num_splits += 1
-        end
-    end
 end
 
 println(num_splits)
